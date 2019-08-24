@@ -27,9 +27,10 @@ var computerChoices = [
   "z"
 ];
 
-var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+var computerGuess =
+  computerChoices[Math.floor(Math.random() * computerChoices.length)];
 
-  console.log("This is the computer's random guess: " + computerGuess);
+console.log("This is the computer's random guess: " + computerGuess);
 
 var numberRemaining = 6;
 var winCounter = 0;
@@ -40,7 +41,6 @@ function numGuesses() {
   document.querySelector("#guessesRemaining").innerHTML =
     "Guesses Left!!: " + numberRemaining;
 }
-
 
 function historyGuesses() {
   document.querySelector("#guessList").innerHTML =
@@ -59,7 +59,6 @@ var restart = function() {
 };
 
 document.onkeyup = function(event) {
-
   numberRemaining--;
   letterTyped = String.fromCharCode(event.keycode).toLowerCase();
 
@@ -68,20 +67,16 @@ document.onkeyup = function(event) {
   letterTypedArray.push(letterTyped);
   numGuesses();
   historyGuesses();
+};
+if (letterTyped === computerGuess) {
+  wins++;
+  document.querySelector("#youWin").innerHTML = "Wins: " + wins;
+  console.log("WWWWWIWIIIIIINNNNNNNN");
+  restart();
+} else if (guessesRemaining === 0) {
+  losses++;
 
+  console.log("LOSSSSSSSEEEEEEEE");
+  document.querySelector("#youLose").innerHTML = "Loses: " + losses;
+  restart();
 }
-  if (letterTyped === computerGuess) {
-    wins++;
-    document.querySelector("#youWin").innerHTML = "Wins: " + wins;
-    console.log('WWWWWIWIIIIIINNNNNNNN')
-    restart();
-  } else if (guessesRemaining === 0) {
-    losses++;
-
-    console.log('LOSSSSSSSEEEEEEEE')
-    document.querySelector("#youLose").innerHTML = "Loses: " + losses;
-    restart();
-  }
-
-  
-
