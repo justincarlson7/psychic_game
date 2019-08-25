@@ -27,77 +27,51 @@ var computerChoices = [
   "z"
 ];
 
-var numberRemaining = 6;
-var winsCounter = 0;
-var lossCounter = 0;
+var guesses = 6;
+var wins = 0;
+var losses = 0;
 var letterTypedArray = [];
-//var letterTyped = "";
+
 
 var computerGuess =
   computerChoices[Math.floor(Math.random() * computerChoices.length)];
 
-  console.log("This is the computer guess " + computerGuess);
-
-function list(letterTyped) {
-  this.letterTypedArray = letterTypedArray.push(letterTyped);
+function countGuessesRemaining() {
+  document.querySelector("#guessesRemaining").innerHTML = "Guesses Remaining: " + guesses;
 }
 
-console.log("This is the list " + letterTypedArray);
-
-list();
-
-
-
-function remaining() {
-  document.querySelector("#guessesRemaining").innerHTML =
-    "Guesses Left " + numberRemaining;
+function guessList() {
+  document.querySelector("#letterTypedArray").innerHTML =
+    "Letters guessed: " + letterTypedArray.join(' ');
 }
 
-function listOfGuesses() {
-  document.querySelector("#guessList").innerHTML =
-    "Letters guessed: " + letterTypedArray;
-}
+countGuessesRemaining();
 
-// remaining();
-
-function restart() {
-  numberRemaining = 6;
+var restart = function() {
+  guesses = 6;
   letterTypedArray = [];
   computerGuess =
     computerChoices[Math.floor(Math.random() * computerChoices.length)];
-}
-//start games when user selects number
+};
+
+
 document.onkeyup = function(event) {
-  numberRemaining--;
-  var letterTyped = event.key;
+ guesses--;
 
+  var letterTyped = String.fromCharCode(event.keyCode).toLowerCase();
 
+  letterTypedArray.push(letterTyped);
+  countGuessesRemaining();
+  guessList();
+  
+  if (letterTyped === computerGuess) {
+    wins++;
+    document.querySelector("#youWin").innerHTML = "Wins: " + wins;
+    restart();
+  } else if (guesses === 0) {
+    losses++;
+    document.querySelector("#youLose").innerHTML = "Losses: " + losses;
+    restart();
+  }
+};
 
-  console.log("Is this the letter that I picked " + letterTyped);
-
-  //   if (playerGuess >= 65 && playerGuess <= 90) {
-  //     var playerGuess = event.key;
-  //     letters(playerGuess);
-  //   } else {
-  // console.log("Pick another letter!!!!");
-}
-
-
-remaining();
-listOfGuesses();
-
-if (this.letterTyped === computerGuess) {
-  winsCounter++;
-  document.querySelector("#youWin").innerHTML = "Wins: " + winsCounter;
-
-  restart();
-
-} else if (numberRemaining === 0) {
-  lossCounter++;
-
-  document.querySelector("#youLose").innerHTML = "Loses: " + lossCounter;
-
-  restart();
-
-
-}
